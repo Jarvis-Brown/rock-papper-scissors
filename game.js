@@ -20,18 +20,24 @@ const getComputerChoice = (computerOption) => {
 const getHumanChoice = () => {
     let userOption = window.prompt("Choose rock paper or scissors");
 
+    if (userOption === null) return "invalid";
+
+    userOption = userOption.toLowerCase();
+
     if (userOption === "rock") {
         return options[0];
     } else if (userOption === "paper") {
         return options[1];
     } else if (userOption === "scissors") {
         return options[2];
+    } else {
+        return "invalid";
     }
 };
 
 const playRound = (humanChoice, computerChoice) => {
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
+    humanChoice = getHumanChoice();
+    computerChoice = getComputerChoice();
 
     if (humanChoice === options[0] && computerChoice === options[0]) {
         return "its a tie.";
@@ -60,5 +66,21 @@ const playRound = (humanChoice, computerChoice) => {
     }
 };
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+const playGame = () => {
+    for (let i = 0; i < 5; i++) {
+        const result = playRound();
+        console.log(result);
+        console.log(
+            `Your score is ${humanScore}. The CPU score is ${computerScore}`,
+        );
+        playRound();
+        if (humanScore === 3) {
+            return "You win the whole game!";
+        } else if (computerScore === 3) {
+            return "the computer win the whole game!";
+        }
+    }
+    return `Game over! Final score — You: ${humanScore} | CPU: ${computerScore}`;
+};
+
+playGame();
